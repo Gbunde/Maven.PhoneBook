@@ -1,45 +1,61 @@
 package com.zipcodewilmington.phonebook;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by leon on 1/23/18.
  */
 public class PhoneBook {
+    private Map<String,List<String>>pBook;
+
+    private List<String>phoneNumList = new ArrayList<>();
+
     public PhoneBook(Map<String, List<String>> map) {
+        this.pBook = map;
     }
 
     public PhoneBook() {
-        this(null);
+        pBook = new LinkedHashMap<String, List<String>>();
+
     }
 
     public void add(String name, String phoneNumber) {
+        phoneNumList.add(phoneNumber);
+        pBook.put(name,phoneNumList);
+
     }
 
     public void addAll(String name, String... phoneNumbers) {
+        pBook.put(name,Arrays.asList(phoneNumbers));
     }
 
     public void remove(String name) {
+        pBook.remove(name);
     }
 
     public Boolean hasEntry(String name) {
-        return null;
+        return  pBook.containsKey(name)|| phoneNumList.contains(name);
     }
 
     public List<String> lookup(String name) {
-        return null;
+        return pBook.get(name);
     }
 
-    public String reverseLookup(String phoneNumber)  {
-        return null;
+    public String reverseLookup(String phoneNumber) {
+        String result = "";
+        for (Map.Entry<String, List<String>> entry : pBook.entrySet()) {
+            result = entry.getKey();
+        }
+        return result;
     }
 
-    public List<String> getAllContactNames() {
-        return null;
-    }
+        public List<String> getAllContactNames () {
+            return new ArrayList<>(pBook.keySet());
+        }
+
+
 
     public Map<String, List<String>> getMap() {
-        return null;
+        return this.pBook;
     }
 }
